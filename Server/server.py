@@ -9,7 +9,6 @@ server_ip = socket.gethostbyname(server)
 
 try:
     s.bind((server, port))
-
 except socket.error as e:
     print(str(e))
 
@@ -17,12 +16,15 @@ s.listen(2)
 print("Waiting for a connection")
 
 currentId = "0"
-pos = ["0:173,100,0", "1:173,100,0"]
+pos = []
 
 def threaded_client(conn):
     global currentId, pos
+    if int(currentId)%2 == 0:
+        pos.append(currentId + ":173,100,0")
+        pos.append(str(int(currentId) + 1) + ":173,100,0")
     conn.send(str.encode(currentId))
-    currentId = "1"
+    currentId = str(int(currentId)+1)
     reply = ''
     while True:
         try:
@@ -37,8 +39,9 @@ def threaded_client(conn):
                 id = int(arr[0])
                 pos[id] = reply
 
-                if id == 0: nid = 1
-                if id == 1: nid = 0
+
+                if id%2 == 0: nid = id + 1
+                else: nid = id - 1
 
                 reply = pos[nid][:]
                 print("Sending: " + reply)
