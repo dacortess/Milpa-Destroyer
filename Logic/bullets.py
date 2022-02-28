@@ -54,13 +54,21 @@ class Bullets():
             if bullet.y > 600:
                 self.p2_bullets.remove(bullet)
 
-    def bullet_colision(self, event, P1_SCORE, P2_SCORE):
+    def bullet_colision(self, event, P1_SCORE, P2_SCORE, LIFE):
 
         if event.type == self.p1_hit:
             P1_SCORE.score += 1
+            if P1_SCORE.score%5 == 0 and P1_SCORE.score != 0:
+                LIFE.life_p2 -= 1
+                if LIFE.life_p2 == 0:
+                    LIFE.winner = 2
             self.hit_sound.play()
 
         if event.type == self.p2_hit:
             P2_SCORE.score += 1
+            if P2_SCORE.score%5 == 0 and P2_SCORE.score != 0:
+                LIFE.life_p1 -= 1
+                if LIFE.life_p1 == 0:
+                    LIFE.winner = 1
             self.hit_sound.play()
 
