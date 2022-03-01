@@ -6,28 +6,20 @@ class Client:
         self.server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         self.host = "localhost"
         self.port = 1234
-        self.address = (self.host, self.port)
-        self.id = self.connect()
+        self.id = self.get_id()
 
-    def connect(self):
-        self.server.connect(self.address)
+    def get_id(self):
+        self.server.connect((self.host, self.port))
         return self.server.recv(2048).decode()
 
-    def send(self, data):
-        try:
-            to_send = str(data)
-            self.server.send(to_send.encode())
-            recived = self.server.recv(2048).decode()
-            return recived
-            
-        except socket.error as e:
-            return str(e)
-
     def get_data(self, player, bullets_rec, score, life):
-        to_send = str(self.id) + ":" + str(player.x) + "," + str(player.y) + "," + str(bullets_rec) + "," + str(score.score) + "," + str(life.life_p1)
-        data = self.send(to_send)
+        info = str(self.id) + ":" + str(player.x) + "," + str(player.y) + "," + str(bullets_rec) + "," + str(score.score) + "," + str(life.life_p1)
+        
+        self.server.send(info.encode())
+        to_parse = self.server.recv(2048).decode()
+
         try:
-            d = data.split(":")[1].split(",")
-            return int(d[0]), int(d[1])-player.height-400, int(d[2]), int(d[3]), int(d[4])
+            info = to_parse.split(":")[1].split(",")
+            return int(info[0]), int(info[1])-player.height-400, int(info[2]), int(info[3]), int(info[4])
         except:
             return 0,0,0,0,0
