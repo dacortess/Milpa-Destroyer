@@ -21,8 +21,8 @@ pos = []
 def threaded_client(conn):
     global currentId, pos
     if int(currentId)%2 == 0:
-        pos.append(currentId + ":173,100,0")
-        pos.append(str(int(currentId) + 1) + ":173,100,0")
+        pos.append(currentId + ":173,100,0,0,3")
+        pos.append(str(int(currentId) + 1) + ":173,100,0,0,3")
     conn.send(str.encode(currentId))
     currentId = str(int(currentId)+1)
     reply = ''
@@ -49,7 +49,6 @@ def threaded_client(conn):
             conn.sendall(str.encode(reply))
         except:
             break
-
     print("Connection Closed")
     conn.close()
 

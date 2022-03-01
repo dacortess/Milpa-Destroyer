@@ -23,11 +23,11 @@ class Client:
         except socket.error as e:
             return str(e)
 
-    def get_data(self, player, bullets_rec):
-        to_send = str(self.id) + ":" + str(player.x) + "," + str(player.y) + "," + str(bullets_rec)
+    def get_data(self, player, bullets_rec, score, life):
+        to_send = str(self.id) + ":" + str(player.x) + "," + str(player.y) + "," + str(bullets_rec) + "," + str(score.score) + "," + str(life.life_p1)
         data = self.send(to_send)
         try:
             d = data.split(":")[1].split(",")
-            return int(d[0]), int(d[1])-player.height-400, int(d[2])
+            return int(d[0]), int(d[1])-player.height-400, int(d[2]), int(d[3]), int(d[4])
         except:
-            return 0,0,0
+            return 0,0,0,0,0

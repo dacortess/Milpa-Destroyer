@@ -99,6 +99,7 @@ class Game():
         
         while self.is_runnig:
 
+            temp_score =  0
             self.bullets.bullets_rec = 0
 
             self.clock.tick(self.window.fps)
@@ -111,7 +112,7 @@ class Game():
 
             self.player_1.key_mapping(self.track_p1)
 
-            self.track_p2.x, self.track_p2.y, self.bullets.bullets_rec = self.client.get_data(self.track_p1, self.bullets.bullets_rec)
+            self.track_p2.x, self.track_p2.y, self.bullets.bullets_rec, self.score_p2.score, self.life.life_p2 = self.client.get_data(self.track_p1, self.bullets.bullets_rec, self.score_p1, self.life)
 
             self.bullets.bullets_recive(self.track_p2)
 

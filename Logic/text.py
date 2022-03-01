@@ -20,4 +20,7 @@ class Score(Text):
     
     def get_score(self, color):
         return self.font.render("SCORE: " + str(self.score), 1, color)
+    
+    def set_score(self, temp_score):
+        self.score = temp_score
         
