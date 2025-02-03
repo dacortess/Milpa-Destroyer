@@ -1,4 +1,4 @@
-# **Milpa Destroyer**
+# **Space Destroyer**
 
 A spaceships platform multiplayer game.
 
